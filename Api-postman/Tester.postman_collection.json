@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "fb7bfeaa-cf20-403d-8809-b53c478d58de",
+		"name": "Tester",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24592823",
+		"_collection_link": "https://planetary-escape-383664.postman.co/workspace/Team-Workspace~c39dc791-c238-461e-848f-d7d86098265c/collection/24592823-fb7bfeaa-cf20-403d-8809-b53c478d58de?action=share&source=collection_link&creator=24592823"
+	},
+	"item": [
+		{
+			"name": "Get all products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"TC_check_id_38_Quang\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].id).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each product has id, title, price, category, description, and image\", \r",
+							"    function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    jsonData.forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"title\").that.is.a(\"string\");\r",
+							"        pm.expect(item).to.have.property(\"price\").that.is.a(\"number\");\r",
+							"        pm.expect(item).to.have.property(\"category\").that.is.a(\"string\");\r",
+							"        pm.expect(item).to.have.property(\"description\").that.is.a(\"string\");\r",
+							"        pm.expect(item).to.have.property(\"image\").that.is.a(\"string\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Kiểm tra số lượng sản phẩm trả về\r",
+							"pm.test(\"Number of products is 20\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.equal(20);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fakestoreapi.com/products",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"TC_check_update\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"Thành Quang\");\r",
+							"});\r",
+							"\r",
+							"// Kiểm tra cấu trúc JSON\r",
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"id\": {\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"title\": {\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"price\": {\r",
+							"            \"type\": \"number\"\r",
+							"        },\r",
+							"        \"category\": {\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"description\": {\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"image\": {\r",
+							"            \"type\": \"string\"\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [\"id\", \"title\", \"price\", \"category\", \"description\", \"image\"]\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response structure is valid\", function () {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Thành\",\r\n  \"price\": 13.5,\r\n  \"description\": \"lorem ipsum set\",\r\n  \"image\": \"https://i.pravatar.cc\",\r\n  \"category\": \"electronic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fakestoreapi.com/products",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Data id check\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.eql(7);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Data is updated successfully\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.price).to.eql(13.5); // Kiểm tra price\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test product Quang ca\",\r\n    \"price\": 14,\r\n    \"description\": \"lorem ipsum set\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fakestoreapi.com/products/7",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Data id check\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.eql(8);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Data category check\", function () {\r",
+							"    pm.expect(pm.response.json().category).to.eql(\"quang\");\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://fakestoreapi.com/products/8",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products",
+						"8"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
