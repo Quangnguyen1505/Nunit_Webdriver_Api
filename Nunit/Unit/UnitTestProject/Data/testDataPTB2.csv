@@ -1,0 +1,4 @@
+﻿a,b,c,expected1,expected2,exception
+2,-5,2,2,0,
+1,4,4,-2,-2,
+3,2,1,,,Phuong trinh vo nghiem

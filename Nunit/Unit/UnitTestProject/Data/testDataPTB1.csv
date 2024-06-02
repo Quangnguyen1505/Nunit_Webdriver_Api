@@ -1,0 +1,6 @@
+a,b,expected
+0,0,Phuong trinh vo so nghiem
+0,5,Phuong trinh vo nghiem
+2,-4,Phuong trinh co nghiem: x = 2
+3,0,Phuong trinh co nghiem: x = 0
+0,0,Phuong trinh vo nghiem
